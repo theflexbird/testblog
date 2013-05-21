@@ -25,9 +25,13 @@ class User
   field :current_sign_in_ip, type: String
   field :last_sign_in_ip,    type: String
 
+  field :nickname
+
+  validates_presence_of :nickname
+
   index({ email: 1 }, { unique: true, background: true })
   validates_presence_of :name
-  attr_accessible :name, :email, :password, :password_confirmation, :remember_me, :created_at, :updated_at
+  attr_accessible :name, :nickname, :email, :password, :password_confirmation, :remember_me, :created_at, :updated_at
 
   field :name, type: String
 end
