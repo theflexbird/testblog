@@ -34,4 +34,9 @@ class User
   attr_accessible :name, :nickname, :email, :password, :password_confirmation, :remember_me, :created_at, :updated_at
 
   field :name, type: String
+
+  def to_s
+    self.nickname || self.name
+  end
+  
 end
