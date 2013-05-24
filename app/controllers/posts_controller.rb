@@ -1,5 +1,5 @@
 class PostsController < ApplicationController
-  before_filter :authenticate_user!
+  before_filter :authenticate_user!, :except => [:show,:index]
   expose_decorated(:posts)
   expose_decorated(:post)
 
@@ -21,14 +21,17 @@ class PostsController < ApplicationController
   end
 
   def destroy
-    post.destroy
+    post.destroy # if post.user_id = current_user.id
     render action: :index
   end
 
   def show
+    render action: :index
   end
 
   def mark_archived
+    #post.archived = true
+    #post.save
   end
 
   def create
