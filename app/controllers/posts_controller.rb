@@ -3,7 +3,13 @@ class PostsController < ApplicationController
   expose_decorated(:posts)
   expose_decorated(:post)
 
+  before_filter :display_flash_notice, :except => :index
+
   def index
+  end
+
+  def posts
+    Post.where(:archived => 0).all
   end
 
   def new
@@ -21,20 +27,21 @@ class PostsController < ApplicationController
   end
 
   def destroy
-    post.destroy # if post.user_id = current_user.id
+    post.destroy if post.user_id == current_user.id
     render action: :index
   end
 
   def show
-    render action: :index
   end
 
   def mark_archived
-    #post.archived = true
-    #post.save
+    post.update_attributes!(archived: true)
+    post.save!
+    render action: :index
   end
 
   def create
+    post.user_id = current_user.id
     if post.save
       redirect_to action: :index
     else

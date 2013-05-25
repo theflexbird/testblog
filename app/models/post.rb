@@ -11,4 +11,8 @@ class Post
 
   belongs_to :user
 
+  def tags_array
+    self.tags.to_s.split(',')
+  end
+
 end
